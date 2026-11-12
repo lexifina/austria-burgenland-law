@@ -1455,3 +1455,7 @@ python3 -X utf8 tools/test_repo.py --repo .
 
 Quelle: Rechtsinformationssystem des Bundes (RIS), Bundeskanzleramt, https://www.ris.bka.gv.at, lizenziert unter CC BY 4.0.
 Repository structure, commit history, tables and tools: CC0 1.0 Universal (see [`LICENSE`](LICENSE)).
+
+## Lexifina's copy
+
+Forked into lexifina/austria-burgenland-law from MrKrojer/KLex-Bgld at `2bea2441fbab` (lexifina/global-law#21). Lexifina changed the corpus name and made the fetcher keep to the RIS OGD terms by default: one connection, two seconds between requests, and requests only from 20:00 to 05:00 Vienna time, at weekends or on public holidays (`--no-strict-hours` turns that off). The law commits are MrKrojer's, unchanged.
