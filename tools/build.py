@@ -28,9 +28,9 @@ ROOT = HERE.parents[1]
 CACHE = Path(os.environ.get('KLEX_RIS_CACHE', str(HERE / '.cache')))
 JURISDICTION = 'bund'
 API = 'https://data.bka.gv.at/ris/api/v2.6/Bundesrecht'
-UA = 'klex-watch/1.0 (+https://github.com/lexifina/global-law; klex@krojer.net)'
-PAUSE = 0.28         # ~3.5 requests/second (fair rate-limiting per project specification)
-STRICT_HOURS = False
+UA = 'lexifina-watch/1.0 (+https://lexifina.com/watch; corpus@lexifina.com)'
+PAUSE = 2.0          # seconds between requests (RIS OGD terms, FAQ of 28 Nov 2025: one connection, 2 s apart)
+STRICT_HOURS = True   # RIS OGD terms: only 20:00-05:00 Vienna time, at weekends or on holidays
 COMMITTER = ('Lexifina', 'austria-law@lexifina.com')
 PUBLISHER = ('RIS (Bundeskanzleramt)', 'ris@ris-bka.invalid')
 NS = '{http://www.bka.gv.at}'
@@ -1107,8 +1107,9 @@ def main():
     ap.add_argument('--only', default=None, help='comma-separated Gesetzesnummern (default: all acts)')
     ap.add_argument('--provisions', default=None, help='for tests only: keep just these APA values, separated by ";"')
     ap.add_argument('--fetch-only', action='store_true', help='fill the cache and stop')
-    ap.add_argument('--rate', type=float, default=3.5, help='requests per second (default: 3.5)')
-    ap.add_argument('--strict-hours', action='store_true', help='enforce 20:00-05:00 / weekend window')
+    ap.add_argument('--rate', type=float, default=0.5, help='requests per second (default: 0.5, the RIS OGD terms)')
+    ap.add_argument('--strict-hours', action=argparse.BooleanOptionalAction, default=True,
+                    help='keep to the RIS OGD hours, 20:00-05:00 Vienna time or weekends and holidays (default: on)')
     ap.add_argument('--verify-rebuild', action='store_true')
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding='utf-8')
